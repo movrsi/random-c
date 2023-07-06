@@ -1,18 +1,18 @@
 /**
  * BSD 2-Clause License
- * 
+ *
  * Copyright (c) 2023, movrsi
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  * list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  * this list of conditions and the following disclaimer in the documentation
  * and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -24,7 +24,7 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
- 
+
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -33,6 +33,7 @@ char *convert_remote_to_url(char *p)
 {
     char *ret;
     size_t size;
+    int i;
 
     if (p == NULL)
         return NULL;
@@ -43,15 +44,6 @@ char *convert_remote_to_url(char *p)
             if ((ret = malloc(size)) == NULL)
                 return NULL;
 
-            for (int i = 0; i < size; i++)
-                switch (p[i]) {
-                case ':':
-                    p[i] = '/';
-                    break;
-                default:
-                    continue;
-                }
-                
             ret[0] = 'h';
             ret[1] = ret[2] = 't';
             ret[3] = 'p';
@@ -59,6 +51,17 @@ char *convert_remote_to_url(char *p)
             ret[5] = ':';
             ret[6] = ret[7] = '/';
             strncpy(ret + 8, p + 4, size - 4);
+
+            for (i = 5; i < size; i++) {
+               switch (ret[i]) {
+                case ':':
+                    ret[i] = '/';
+                    break;
+                default:
+                    continue;
+                }
+            }
+
             ret[size] = '\0';
             break;
         case 'h': // indicates https
