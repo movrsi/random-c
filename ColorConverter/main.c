@@ -31,16 +31,6 @@ int main(int argc, char **argv)
 
     int c;
     char *color;
-   /* char *t = "255,255,255";
-    printf("%i", sizeof(&t));
-    return 0;
-
-    if ((color = rgb_to_hex(t)) == NULL)
-        return -1;
-
-    puts(color);
-    free(color);
-    return 0;*/
 
     while ((c = getopt (argc, argv, "h:r:")) != -1)
     {
